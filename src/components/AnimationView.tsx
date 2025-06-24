@@ -48,7 +48,6 @@ const AnimationView: React.FC = () => {
     }
   }, [inputs, dispatch]);
 
-  // Continuous animation updates
   useEffect(() => {
     if (animations.length === 0) return;
 
@@ -56,7 +55,7 @@ const AnimationView: React.FC = () => {
       setAnimations(prev => prev.map(animation => 
         updateAnimationPosition(animation, 0.05)
       ));
-    }, 50); // 20 FPS
+    }, 50);
 
     return () => clearInterval(interval);
   }, [animations.length]);
@@ -87,8 +86,7 @@ const AnimationView: React.FC = () => {
             </div>
           </div>
         </div>
-        
-        {/* 16:9 Animation Container */}
+
         <div 
           className="relative bg-black border-2 border-gray-600 overflow-hidden"
           style={{ aspectRatio: '16/9' }}
@@ -102,8 +100,7 @@ const AnimationView: React.FC = () => {
               {animation.text}
             </div>
           ))}
-          
-          {/* Center message when no animations */}
+
           {animations.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-gray-500 text-lg text-center">

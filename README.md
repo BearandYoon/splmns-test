@@ -4,12 +4,23 @@ A React-based web application that creates animated visualizations of user-submi
 
 ## Features
 
-- **Text Input Management**: Add up to 5 text inputs (names, phrases, etc.)
-- **Dynamic Animations**: Six different animation types including circular, bounce, zigzag, spiral, pendulum, and figure-8 patterns
-- **Real-time Visualization**: Smooth 20 FPS animations with physics-based movement and boundary detection
+### 🎯 Core Functionality
+- **Text Input Management**: Add up to 5 text inputs (names, phrases, etc.) with automatic FIFO replacement
+- **Persistent Animation Properties**: Animation settings (color, speed, position) are preserved when adding new inputs
+- **Smart Boundary Detection**: Elements stay within viewport bounds with proper collision handling
+
+### 🎨 Animation System
+- **Six Animation Types**: Circular, bounce, zigzag, spiral, pendulum, and figure-8 patterns
+- **Real-time Physics**: Smooth 20 FPS animations with velocity-based movement
+- **Visual Variety**: 8 gradient color schemes with random size variations
+- **Intelligent Positioning**: Boundary-aware positioning prevents elements from clipping edges
+
+### 💻 Technical Features  
+- **Redux State Persistence**: Animation properties stored in Redux for consistency
+- **TypeScript Safety**: Fully typed interfaces and components
 - **Responsive Design**: Clean, modern UI built with Tailwind CSS
-- **State Management**: Redux Toolkit for efficient state handling
-- **Routing**: Multi-page navigation between input form and animation view
+- **Component Architecture**: Modular design with reusable utilities
+- **Multi-page Navigation**: Seamless routing between input and animation views
 
 ## Tech Stack
 
@@ -66,33 +77,74 @@ Builds the app for production to the `build` folder
 ```
 src/
 ├── components/
-│   ├── InputForm.tsx      # Text input form with validation
-│   └── AnimationView.tsx  # Animation canvas and controls
+│   ├── InputForm.tsx         # Text input form with validation
+│   └── AnimationView.tsx     # Animation canvas and controls
 ├── store/
-│   ├── store.ts          # Redux store configuration
-│   └── inputsSlice.ts    # Input state management
+│   ├── store.ts             # Redux store configuration
+│   └── inputsSlice.ts       # Input and animation state management
+├── types/
+│   ├── AnimatedElement.ts   # Animation property interfaces
+│   └── Input.ts            # Input item interfaces
+├── utils/
+│   └── animationUtils.ts   # Animation calculations and utilities
 ├── hooks/
-│   └── redux.ts          # Typed Redux hooks
-├── App.tsx               # Main app component with routing
-└── index.tsx             # Application entry point
+│   └── redux.ts            # Typed Redux hooks
+├── App.tsx                 # Main app component with routing
+└── index.tsx              # Application entry point
 ```
 
 ## How It Works
 
+### 🔄 Application Flow
 1. **Input Phase**: Users enter text (up to 50 characters) on the home page
-2. **Storage**: Inputs are stored in Redux state (maximum 5 items, FIFO replacement)
-3. **Animation**: Navigate to the animation view to see text elements animate
-4. **Physics**: Each text element gets random properties (position, velocity, animation type, color)
-5. **Rendering**: Continuous updates at 20 FPS with boundary collision detection
+2. **State Management**: Inputs are stored in Redux with automatic FIFO replacement (max 5 items)
+3. **Animation Generation**: Navigate to animation view to see text elements come alive
+4. **Property Persistence**: Animation properties (color, speed, position) are saved and restored
+5. **Real-time Rendering**: Continuous updates at 20 FPS with intelligent boundary detection
+
+### ⚙️ Animation Engine
+- **Initialization**: Each text gets random properties (position, velocity, animation type, color)
+- **Physics Loop**: Position updates based on velocity and animation-specific calculations
+- **Boundary Handling**: Smart collision detection prevents elements from leaving the viewport
+- **State Persistence**: Properties are maintained when adding new animations or navigating
+- **Performance**: Optimized rendering with efficient state management
 
 ## Animation Types
 
-- **Circular**: Smooth circular motion patterns
-- **Bounce**: Vertical bouncing with physics
-- **Zigzag**: Horizontal oscillating movement
-- **Spiral**: Expanding/contracting spiral paths
-- **Pendulum**: Pendulum-like swinging motion
-- **Figure-8**: Complex figure-eight patterns
+| Type | Description | Movement Pattern |
+|------|-------------|------------------|
+| **🔄 Circular** | Smooth circular motion around a center point | Orbital movement with customizable radius |
+| **⬆️ Bounce** | Vertical bouncing with realistic physics | Up-down motion with gravity simulation |
+| **↔️ Zigzag** | Horizontal oscillating movement | Side-to-side motion with smooth transitions |
+| **🌀 Spiral** | Expanding/contracting spiral paths | Radial movement with rotational component |
+| **⚖️ Pendulum** | Pendulum-like swinging motion | Arc-based movement with momentum |
+| **∞ Figure-8** | Complex figure-eight patterns | Dual-axis sinusoidal movement |
+
+### 🎨 Visual Properties
+- **8 Gradient Color Schemes**: Purple-pink, blue-cyan, green-emerald, orange-red, yellow-orange, indigo-purple, pink-rose, teal-green
+- **Dynamic Sizing**: Random scale variations (0.8x - 1.3x)
+- **Smooth Transitions**: 100ms CSS transitions for seamless movement
+- **Boundary-Aware**: Elements respect viewport edges with proper collision detection
+
+## Key Features & Improvements
+
+### 🔧 Recent Enhancements
+- **Animation Persistence**: Properties are now saved in Redux store and restored when creating new animations
+- **Optimized Boundaries**: Improved collision detection that accounts for actual element dimensions
+- **Interface Consolidation**: Streamlined type system with `AnimationProperties` extending pattern
+- **Centralized State**: All animation and input data managed through Redux for consistency
+
+### 🏗️ Architecture Highlights
+- **Type Safety**: Comprehensive TypeScript interfaces for all animation properties
+- **Modular Design**: Separated concerns with dedicated utilities, types, and components
+- **Performance Optimized**: Efficient state updates and rendering cycles
+- **Scalable Structure**: Easy to extend with new animation types or features
+
+### 🎮 User Experience
+- **Persistent Animations**: Existing animations maintain their properties when adding new ones
+- **Intuitive Controls**: Clear navigation between input and animation views
+- **Visual Feedback**: Real-time counter showing active animations (max 5)
+- **Responsive Layout**: Works seamlessly across different screen sizes
 
 ## Browser Support
 
