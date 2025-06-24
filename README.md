@@ -1,47 +1,99 @@
-# Getting Started with Create React App
+# Text Animation Playground
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based web application that creates animated visualizations of user-submitted text inputs with various motion patterns.
+
+## Features
+
+- **Text Input Management**: Add up to 5 text inputs (names, phrases, etc.)
+- **Dynamic Animations**: Six different animation types including circular, bounce, zigzag, spiral, pendulum, and figure-8 patterns
+- **Real-time Visualization**: Smooth 20 FPS animations with physics-based movement and boundary detection
+- **Responsive Design**: Clean, modern UI built with Tailwind CSS
+- **State Management**: Redux Toolkit for efficient state handling
+- **Routing**: Multi-page navigation between input form and animation view
+
+## Tech Stack
+
+- **Frontend**: React 19.1.0 with TypeScript
+- **Styling**: Tailwind CSS 3.4.17
+- **State Management**: Redux Toolkit 2.8.2
+- **Routing**: React Router DOM 7.6.2
+- **Build Tool**: Create React App 5.0.1
+- **Testing**: React Testing Library & Jest
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (version 16 or higher)
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd splmns-test
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) to view the application
 
 ## Available Scripts
 
-In the project directory, you can run:
-
 ### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Runs the app in development mode at [http://localhost:3000](http://localhost:3000)
 
 ### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the test runner in interactive watch mode
 
 ### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Builds the app for production to the `build` folder
 
 ### `npm run eject`
+**Note: This is a one-way operation!** Ejects from Create React App configuration
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Project Structure
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+src/
+├── components/
+│   ├── InputForm.tsx      # Text input form with validation
+│   └── AnimationView.tsx  # Animation canvas and controls
+├── store/
+│   ├── store.ts          # Redux store configuration
+│   └── inputsSlice.ts    # Input state management
+├── hooks/
+│   └── redux.ts          # Typed Redux hooks
+├── App.tsx               # Main app component with routing
+└── index.tsx             # Application entry point
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## How It Works
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. **Input Phase**: Users enter text (up to 50 characters) on the home page
+2. **Storage**: Inputs are stored in Redux state (maximum 5 items, FIFO replacement)
+3. **Animation**: Navigate to the animation view to see text elements animate
+4. **Physics**: Each text element gets random properties (position, velocity, animation type, color)
+5. **Rendering**: Continuous updates at 20 FPS with boundary collision detection
 
-## Learn More
+## Animation Types
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Circular**: Smooth circular motion patterns
+- **Bounce**: Vertical bouncing with physics
+- **Zigzag**: Horizontal oscillating movement
+- **Spiral**: Expanding/contracting spiral paths
+- **Pendulum**: Pendulum-like swinging motion
+- **Figure-8**: Complex figure-eight patterns
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-# splmns-test
+## Browser Support
+
+Supports all modern browsers as defined in the `browserslist` configuration.
