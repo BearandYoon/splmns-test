@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../hooks/redux';
-import { clearInputs } from '../store/inputsSlice';
+import { clearInputs, updateAnimationProperties, clearAnimationProperties } from '../store/inputsSlice';
 import { AnimatedElement } from '../types/AnimatedElement';
 import { getRandomAnimation, updateAnimationPosition, getAnimationStyle } from '../utils/animationUtils';
 
@@ -13,18 +13,40 @@ const AnimationView: React.FC = () => {
 
   useEffect(() => {
     if (inputs.length > 0) {
-      const newAnimations: AnimatedElement[] = inputs.map(input => ({
-        id: input.id,
-        text: input.text,
-        startTime: Date.now() + Math.random() * 1000,
-        ...getRandomAnimation()
-      }));
+      const newAnimations: AnimatedElement[] = inputs.map(input => {
+        // Check if we already have animation properties for this input
+        if (input.animationProperties) {
+          return {
+            id: input.id,
+            text: input.text,
+            startTime: Date.now(),
+            ...input.animationProperties
+          };
+        } else {
+          // Generate new animation properties for new inputs
+          const animationProps = getRandomAnimation();
+          const newAnimation = {
+            id: input.id,
+            text: input.text,
+            startTime: Date.now() + Math.random() * 1000,
+            ...animationProps
+          };
+          
+          // Save the animation properties to Redux store
+          dispatch(updateAnimationProperties({
+            id: input.id,
+            properties: animationProps
+          }));
+          
+          return newAnimation;
+        }
+      });
 
       setAnimations(newAnimations);
     } else {
       setAnimations([]);
     }
-  }, [inputs]);
+  }, [inputs, dispatch]);
 
   // Continuous animation updates
   useEffect(() => {
@@ -52,7 +74,10 @@ const AnimationView: React.FC = () => {
           </button>
           <div className="flex gap-4">
             <button
-              onClick={() => dispatch(clearInputs())}
+              onClick={() => {
+                dispatch(clearInputs());
+                dispatch(clearAnimationProperties());
+              }}
               className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
             >
               Clear All

@@ -1,9 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export interface AnimationProperties {
+  x: number;
+  y: number;
+  velocityX: number;
+  velocityY: number;
+  speed: number;
+  direction: number;
+  animationType: 'circular' | 'bounce' | 'zigzag' | 'spiral' | 'pendulum' | 'figure8';
+  color: string;
+  size: number;
+  amplitude: number;
+  frequency: number;
+  rotationSpeed: number;
+}
+
 export interface InputItem {
   id: string;
   text: string;
   timestamp: number;
+  animationProperties?: AnimationProperties;
 }
 
 interface InputsState {
@@ -31,11 +47,22 @@ const inputsSlice = createSlice({
       
       state.items.push(newInput);
     },
+    updateAnimationProperties: (state, action: PayloadAction<{ id: string; properties: AnimationProperties }>) => {
+      const item = state.items.find(item => item.id === action.payload.id);
+      if (item) {
+        item.animationProperties = action.payload.properties;
+      }
+    },
     clearInputs: (state) => {
       state.items = [];
+    },
+    clearAnimationProperties: (state) => {
+      state.items.forEach(item => {
+        item.animationProperties = undefined;
+      });
     },
   },
 });
 
-export const { addInput, clearInputs } = inputsSlice.actions;
+export const { addInput, updateAnimationProperties, clearInputs, clearAnimationProperties } = inputsSlice.actions;
 export default inputsSlice.reducer;
